@@ -1,6 +1,4 @@
- class Priority { LOW, MEDIUM, HIGH }
-
-
+class Priority { LOW, MEDIUM, HIGH }
 data class Task(
     val id: Int,
     var title: String,
@@ -10,8 +8,6 @@ data class Task(
     var isRecurring: Boolean = false,
     var recurrenceIntervalMillis: Long? = null // for recurring tasks
 )
-
-
 class TaskManager {
      val tasks = mutableMapOf<Int, Task>()
      val timers = mutableMapOf<Int, Timer>()
