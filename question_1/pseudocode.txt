@@ -3,25 +3,57 @@ Develop a task scheduling application that helps users organise their daily acti
 users should be able to add,edit and delete tasks,set priorities and deadlines and
 receive reminders for upcoming tasks.Design the system to handle recurring tasks.
 
+DEFINE taskList AS list of Task objects
+Initialize taskList = []
 
-input
-Array of tasks
+function addTask(details, recurrenceRule=null):
+    task = createTask(details)
+    task.id = generateUniqueId()
+    task.recurrenceRule = recurrenceRule
+    task.reminders = calculateReminders(task)
+    taskList.add(task)
+    if recurrenceRule != null:
+        generateRecurringTasks(task)
+    return task.id
 
-create a function to add task
-iterate through the array,if the task to be done does not exist in the array,add the task
-create a function to edit task
-iterate through the array ,rename the task that is needed to be renamed
-create a function to delete task
-iterate through the array ,if the task that is done is in the array,then we delete iterate
-create a function to set priorities and deadlines 
-iterate through the array and rearrange the task according to the priority,if a task is 
-to be done first,it will be highly prioritised hence being the first in the array
-create a function tosend reminders and notify the upcoming task according to the task 
-priority
+function editTask(taskId, updatedDetails):
+    task = findTaskById(taskId)
+    if task == null:
+        return error
+    update task with updatedDetails
+    if recurrenceRule changed:
+        updateRecurringTasks(task)
+    task.reminders = calculateReminders(task)
 
+function deleteTask(taskId):
+    task = findTaskById(taskId)
+    if task == null:
+        return error
+    if task.recurrenceRule != null:
+        deleteRecurringInstances(taskId)
+    taskList.remove(task)
 
-output
+function scheduleTasks():
+    sortedTasks = sortTasksByPriorityAndDueDate(taskList)
+    for task in sortedTasks:
+        if dependenciesCompleted(task):
+            assignToAvailableResource(task)
 
-array of tasks
-priorities and deadlines of every task
-notification
+function generateRecurringTasks(task):
+    nextDate = task.dueDate
+    while nextDate <= task.recurrenceRule.endDate or no endDate:
+        nextDate = calculateNextOccurrence(nextDate, task.recurrenceRule)
+        newTask = cloneTaskWithNewDate(task, nextDate)
+        taskList.add(newTask)
+
+function sendReminders():
+    currentTime = now()
+    for task in taskList:
+        for reminderTime in task.reminders:
+            if reminderTime <= currentTime and not task.completed:
+                notifyUser(task)
+
+function markTaskCompleted(taskId):
+    task = findTaskById(taskId)
+    if task != null:
+        task.completed = true
