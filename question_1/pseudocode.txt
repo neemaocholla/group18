@@ -3,57 +3,10 @@ Develop a task scheduling application that helps users organise their daily acti
 users should be able to add,edit and delete tasks,set priorities and deadlines and
 receive reminders for upcoming tasks.Design the system to handle recurring tasks.
 
-DEFINE taskList AS list of Task objects
-Initialize taskList = []
-
-function addTask(details, recurrenceRule=null):
-    task = createTask(details)
-    task.id = generateUniqueId()
-    task.recurrenceRule = recurrenceRule
-    task.reminders = calculateReminders(task)
-    taskList.add(task)
-    if recurrenceRule != null:
-        generateRecurringTasks(task)
-    return task.id
-
-function editTask(taskId, updatedDetails):
-    task = findTaskById(taskId)
-    if task == null:
-        return error
-    update task with updatedDetails
-    if recurrenceRule changed:
-        updateRecurringTasks(task)
-    task.reminders = calculateReminders(task)
-
-function deleteTask(taskId):
-    task = findTaskById(taskId)
-    if task == null:
-        return error
-    if task.recurrenceRule != null:
-        deleteRecurringInstances(taskId)
-    taskList.remove(task)
-
-function scheduleTasks():
-    sortedTasks = sortTasksByPriorityAndDueDate(taskList)
-    for task in sortedTasks:
-        if dependenciesCompleted(task):
-            assignToAvailableResource(task)
-
-function generateRecurringTasks(task):
-    nextDate = task.dueDate
-    while nextDate <= task.recurrenceRule.endDate or no endDate:
-        nextDate = calculateNextOccurrence(nextDate, task.recurrenceRule)
-        newTask = cloneTaskWithNewDate(task, nextDate)
-        taskList.add(newTask)
-
-function sendReminders():
-    currentTime = now()
-    for task in taskList:
-        for reminderTime in task.reminders:
-            if reminderTime <= currentTime and not task.completed:
-                notifyUser(task)
-
-function markTaskCompleted(taskId):
-    task = findTaskById(taskId)
-    if task != null:
-        task.completed = true
+1.Create a set of instruction that takes in tasks as a parameter
+2.Go through the tasks observing if some tasks need to be added,deleted or edited.
+3.For the tasks to be added ,create a set of instruction that will take in tasks to be added. 
+4.After that,create a set of instruction that will take in tasks to be deleted  in the list of tasks.
+5.If you want to edit the list of tasks, create a set of instruction that will enable your edit the task for example renaming the task.
+6.Create a set of instruction that will arrange the task as per the priority.
+7.After that, create a set of instruction that will take in task as per the priority that will remind the users of the tasks deadline and the upcoming tasks.
